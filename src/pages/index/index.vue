@@ -9,6 +9,18 @@
     display: inline-flex;
   }
 }
+@media screen and (max-width: 768px) {
+  .layout-main{
+
+  }
+  .v-left {
+    flex: 1;
+    width:auto;
+  }
+  .v-right{
+
+  }
+}
 </style>
 <template>
 	<div class="layout-body">
@@ -30,10 +42,10 @@ export default {
     routeComplete() {
       debugger;
       if (this.routePath.indexOf(this.$route.path) === -1) {
-        let newRoutePath =[].concat(this.routePath);
+        let newRoutePath = [].concat(this.routePath);
         debugger;
-        newRoutePath.push(this.$route.path)
-        this.SET_STORE({ routePath: newRoutePath })
+        newRoutePath.push(this.$route.path);
+        this.SET_STORE({ routePath: newRoutePath });
       }
     }
   },

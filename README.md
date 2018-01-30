@@ -1,6 +1,6 @@
 ## 前言
 ```
-基于Vue2、vue-router、vuex、jquery ......
+基于Vue2.5.0、vue-router3.0.0、vuex3.3.0、jquery2.2.4、bootstrap4.0.0 ......
 ```
 
 ## 源码说明
@@ -13,8 +13,8 @@
 |   |-- components                   // 公共组件
 |       |-- index.js                 // 加载各种公共组件
 |       |-- header.vue               // 头部公共组件
-|       |-- left.vue               // 左公共组件
-|       |-- right.vue               // 右公共组件
+|       |-- left.vue                 // 左公共组件
+|       |-- right.vue                // 右公共组件
 |       |-- footer.vue               // 尾部公共组件
 |   |-- config                       // 路由配置和程序的基本信息配置
 |       |-- routes.js                // 配置页面路由
