@@ -45,7 +45,7 @@
 	<footer class="v-footer">
     <ul>
       <li v-for="(list, index) in links" :key="index" :class="{active:list._active}">
-         <a v-if="list.appkey!==''" @click="linkTab(list)">
+         <a v-if="list.appkey!==''" @click="linkTab(list)" @mousedown="showDeleteButton(list)" @mouseup="clearLoop">
            <img :src="'http://t3cloud.jp/'+list.icourl" />
          </a>
          <a v-else @click="linkTab(list)">
@@ -56,7 +56,8 @@
   </footer>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
+import { SET_STORE } from 'store/info';
 
 export default {
   data() {
@@ -65,6 +66,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions([SET_STORE]),
     appLink: _.debounce(function() {
       let _this = this;
       let _links = [
@@ -90,11 +92,38 @@ export default {
     linkTab: function(list) {
       // 使用路由打开内部页
       this.$router.replace({ path: '/' + list.appkey });
+    },
+    // 长按删除
+    showDeleteButton(t) {
+      clearInterval(this.Loop); //再次清空定时器，防止重复注册定时器
+      this.Loop = setTimeout(() => {
+        this.closeApps(t);
+      }, 1000);
+    },
+    clearLoop() {
+      clearInterval(this.Loop);
+    },
+    closeApps(t) {
+      debugger;
+      //t.appkey;
+      let r = this.routePath;
+      let index = r.indexOf('/'+t.appkey);
+      let s = [];
+      r.forEach(function(d){
+        if( '/'+t.appkey !== d ){
+          s.push(d);
+        }
+      })
+      this.SET_STORE({ routePath: s });
+      if( this.oldRoutePath === '/'+t.appkey ){
+         this.$router.replace({ path: '/' });
+      }
     }
   },
   computed: mapState({
     userApps: state => state.info.userApps,
-    routePath: state => state.info.routePath
+    routePath: state => state.info.routePath,
+    oldRoutePath: state => state.info.oldRoutePath
   }),
   watch: {
     routePath: function() {

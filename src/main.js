@@ -25,19 +25,20 @@ Object
 
 Vue.use(VueRouter)
 
-const router = new VueRouter({routes})
-router.beforeEach(({
-  meta,
-  path
-}, from, next) => {
+const router = new VueRouter({ routes })
 
+debugger;
+router.beforeEach((to, from, next) => {
+  debugger;
   var isLogin = Boolean(store.state.info.id) //true用户已登录， false用户未登录
-  if (!isLogin && path !== '/login') {
-    store.commit('SET_STORE', {oldRoutePath: path})
-    return next({path: '/login'})
+  if (!isLogin && to.path !== '/login') {
+   
+    store.commit('SET_STORE', { oldRoutePath: to.path })
+    store.commit('SET_STORE', { oldRouteQuery: to.query })
+    return next({ path: '/login' })
   }
   next()
 
 })
 
-new Vue({store, router}).$mount('#t3cloud')
+new Vue({ store, router }).$mount('#t3cloud')

@@ -7,12 +7,10 @@ export default [{
   component: App,
   children: [{
       path: '/login', //登录
-      meta: { auth: false },
       component: resolve => require(['../pages/login/'], resolve)
     },
     {
       path: '/', //首页
-      meta: { auth: false },
       component: resolve => require(['../pages/index/'], resolve)
     },
     {

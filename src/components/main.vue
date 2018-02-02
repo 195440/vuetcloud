@@ -24,8 +24,8 @@
 	<div class="v-main">
 
    <!-- <iframe v-for="(list, index) in links" :key="index" :class="{active:list._active}" src="http://www.baidu.com"></iframe>-->
-    <div class="v-box" v-show="iframeShow(list)" v-for="(list, index) in routePath" :key="index">
-      <iframe :id="'v-iframe-'+list.replace('/','')" src="http://www.baidu.com"></iframe>
+    <div class="v-box" v-show="iframeShow(list)" v-for="(list, index) in routePath" :key="list">
+      <iframe :id="'v-iframe-'+list.replace('/','')" src="http://www.baidu.com" :key="list"></iframe>
     </div>
   </div>
 </template>
