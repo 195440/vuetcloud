@@ -30,7 +30,7 @@
 <template>
 	<div>
 		<form class="login" v-on:submit.prevent="submit">
-			<img src="login.png" />
+			<img src="./login.png" />
 			<div class="input-group mb-3">
 				<input type="text" class="form-control" placeholder="社員/AS番号" v-model="form.id" >
 			</div>
@@ -45,13 +45,11 @@
 import { mapActions, mapState } from 'vuex';
 import { SET_STORE } from 'store/info';
 
-import './login.png';
-
 export default {
   data() {
     return {
       form: {
-        id: '',
+        id: '10073306',
         name: ''
       }
     };

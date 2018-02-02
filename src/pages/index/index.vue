@@ -10,24 +10,20 @@
   }
 }
 @media screen and (max-width: 768px) {
-  .layout-main{
-
-  }
   .v-left {
     flex: 1;
-    width:auto;
-  }
-  .v-right{
-
+    width: auto;
+    display: none;
   }
 }
 </style>
 <template>
 	<div class="layout-body">
-		<v-header title="首页"></v-header>
+		<v-header v-show="this.oldRoutePath==='/'"></v-header>
 		<div class="layout-main">
-			<v-left></v-left>
-			<v-right></v-right>
+			<v-left v-show="this.oldRoutePath==='/'"></v-left>
+			<v-right v-show="this.oldRoutePath==='/'"></v-right>
+      <v-main v-show="this.oldRoutePath!=='/'"></v-main>
 		</div>
 		<v-footer></v-footer>
 	</div>
@@ -47,6 +43,7 @@ export default {
         newRoutePath.push(this.$route.path);
         this.SET_STORE({ routePath: newRoutePath });
       }
+      this.SET_STORE({ oldRoutePath: this.$route.path });
     }
   },
   mounted() {
@@ -54,7 +51,8 @@ export default {
     this.routeComplete();
   },
   computed: mapState({
-    routePath: state => state.info.routePath
+    routePath: state => state.info.routePath,
+    oldRoutePath: state => state.info.oldRoutePath
   }),
   watch: {
     $route: 'routeComplete'

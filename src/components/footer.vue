@@ -13,6 +13,7 @@
     li {
       float: left;
       list-style-type: none;
+      margin-right: 5px;
       a {
         width: 50px;
         height: 50px;
@@ -44,8 +45,11 @@
 	<footer class="v-footer">
     <ul>
       <li v-for="(list, index) in links" :key="index" :class="{active:list._active}">
-         <a @click="linkTab(list)">
+         <a v-if="list.appkey!==''" @click="linkTab(list)">
            <img :src="'http://t3cloud.jp/'+list.icourl" />
+         </a>
+         <a v-else @click="linkTab(list)">
+           <img src="../img/logo64.png" />
          </a>
       </li>
     </ul>
@@ -53,6 +57,7 @@
 </template>
 <script>
 import { mapState } from 'vuex';
+
 export default {
   data() {
     return {
@@ -61,16 +66,18 @@ export default {
   },
   methods: {
     appLink: _.debounce(function() {
-
       let _this = this;
-      console.log('1111');
-      let _links = [];
+      let _links = [
+        {
+          appkey: ''
+        }
+      ];
       _this.routePath.forEach(function(d) {
         let r = _.find(_this.userApps, function(o) {
-          return o.appkey === d.replace('/', '');
+          return '/' + o.appkey === d;
         });
         if (r) {
-          if (_this.$route.path.replace('/', '') === r.appkey) {
+          if (_this.$route.path === '/' + r.appkey) {
             r._active = true;
           } else {
             r._active = false;
@@ -82,7 +89,7 @@ export default {
     }, 10),
     linkTab: function(list) {
       // 使用路由打开内部页
-      this.$router.replace({ path: '' + list.appkey });
+      this.$router.replace({ path: '/' + list.appkey });
     }
   },
   computed: mapState({
@@ -97,7 +104,6 @@ export default {
       this.appLink();
     },
     $route: 'appLink'
-  },
-
+  }
 };
 </script>
